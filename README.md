@@ -19,7 +19,7 @@ a high-performance library for **volume approximation** and **sampling** of conv
 | **Exponential sampling** | Exponential HMC |
 | **Volume algorithms** | Cooling Balls * Cooling Gaussians * Sequence of Balls |
 | **Rounding** | Minimum covering ellipsoid * Maximum inscribed ellipsoid |
-| **Convenience constructors** | `hypercube(d)` * `hypersimplex(d)` * `cross_polytope(d)` |
+| **Polytope generators** | `hypercube(d)` * `hypersimplex(d)` * `cross_polytope(d)` |
 
 ---
 
@@ -196,9 +196,9 @@ P = conv{ rows of V }
 |---|---|
 | `"cooling_balls"` | Recommended, works for H & V |
 | `"cooling_gaussians"` | H-polytope only |
-| `"sequence_of_balls"` | H & V, faster but less accurate |
+| `"sequence_of_balls"` | H & V, faster  |
 
-### Convenience constructors
+### Polytope generators
 
 ```python
 from volestipy import hypercube, hypersimplex, cross_polytope
@@ -228,38 +228,10 @@ pytest tests/ -v
 
 ---
 
-## Project Structure
-
-```
-volestipy/
-?-- CMakeLists.txt               # CMake build script
-?-- setup.py                     # Python packaging (CMake-based)
-?-- pyproject.toml
-?-- README.md
-?-- external/
-?   ?-- volesti/                 # git submodule - volesti library
-?-- src/
-?   ?-- bindings/
-?       ?-- volesti_bindings.cpp # pybind11 binding definitions
-?-- volestipy/
-?   ?-- __init__.py              # Python wrapper + convenience API
-?-- tests/
-?   ?-- conftest.py
-?   ?-- test_hpolytope.py
-?   ?-- test_vpolytope.py
-?   ?-- test_integration.py
-?-- examples/
-    ?-- example_hypercube.py
-    ?-- example_random_polytope.py
-```
-
----
-
 ## Relationship to Other Projects
 
-* **[volesti](https://github.com/GeomScale/volesti)** - the underlying C++ library
-* **[dingo](https://github.com/GeomScale/dingo)** - metabolic network analysis using volesti
-* **volestipy** - a standalone, general-purpose Python binding via pybind11
+* **[dingo](https://github.com/GeomScale/dingo)** - Python package focusing on metabolic network analysis using volesti
+* **[Rvolesti](https://github.com/GeomScale/Rvolesti)** - R bindings
 
 ---
 
@@ -267,5 +239,4 @@ volestipy/
 
 GNU Lesser General Public License v3.0 -- see [LICENSE](LICENSE).
 
-Copyright (c) 2012-2024 Vissarion Fisikopoulos, Apostolos Chalkis, Elias Tsigaridas
-and contributors.
+Copyright (c) 2026 Vissarion Fisikopoulos, Apostolos Chalkis, Elias Tsigaridas.
