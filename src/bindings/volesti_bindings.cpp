@@ -54,6 +54,9 @@
 #include "preprocess/min_sampling_covering_ellipsoid_rounding.hpp"
 #include "preprocess/inscribed_ellipsoid_rounding.hpp"
 
+// For Benchmark
+#include "benchmark/include/benchmark_cli.hpp"
+
 #include <Eigen/Eigen>
 #include <vector>
 #include <string>
@@ -998,4 +1001,32 @@ R : float
     // Version info
     m.attr("__version__") = "0.1.0";
     m.attr("__volesti_version__") = "1.1.2";
+
+    // ----------------------------------------------------------
+    // Benchmark Suite
+    // ----------------------------------------------------------
+    m.def("run_benchmark", [](const std::vector<std::string>& args) {
+        // Convert Python list of strings to C-style argc/argv
+        std::vector<char*> cstrings;
+        
+        // argv[0] is conventionally the program name
+        cstrings.push_back(const_cast<char*>("volestipy_benchmark")); 
+        
+        for (const auto& s : args) {
+            cstrings.push_back(const_cast<char*>(s.c_str()));
+        }
+        
+        // Call your refactored main function
+        return run_benchmark_cli(cstrings.size(), cstrings.data());
+        
+    }, py::arg("args") = std::vector<std::string>(),
+    R"pbdoc(
+    Run the C++ benchmark suite.
+    
+    Parameters
+    ----------
+    args : list of str
+        Command line arguments as you would pass them in the terminal.
+        Example: ["--config", "config.json", "--dim", "10", "--walk", "BallWalk"]
+    )pbdoc");
 }

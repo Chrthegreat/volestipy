@@ -74,6 +74,7 @@ from volestipy._volestipy import (  # noqa: E402  # type: ignore[import]
     ess,
     univariate_psrf,
     multivariate_psrf,
+    run_benchmark,
 )
 
 
@@ -651,6 +652,7 @@ __all__ = [
     "ess",
     "univariate_psrf",
     "multivariate_psrf",
+    "run_benchmark",
 ]
 
 __version__ = "0.1.0"

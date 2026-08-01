@@ -32,3 +32,10 @@ dev = ["pytest>=7.0", "matplotlib", "scipy"]
 
 [project.urls]
 Repository = "https://github.com/GeomScale/volestipy"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["volestipy*"]

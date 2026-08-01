@@ -34,6 +34,15 @@ if(NOT pybind11_FOUND)
     find_package(pybind11 REQUIRED HINTS "${pybind11_DIR}")
 endif()
 
+# --- QD library ---
+find_library(QD_LIB qd)
+
+if(NOT QD_LIB)
+    message(FATAL_ERROR "Could not find QD library")
+endif()
+
+message(STATUS "QD library: ${QD_LIB}")
+
 # --- Find Eigen3 ---
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 if(NOT Eigen3_FOUND)
@@ -52,7 +61,7 @@ endif()
 
 # --- Find Boost ---
 # volesti only needs Boost headers (random, math) - no compiled libraries required
-find_package(Boost 1.56 REQUIRED)
+find_package(Boost 1.56 REQUIRED COMPONENTS program_options)
 if(NOT Boost_FOUND)
     # Fallback: locate headers manually
     find_path(Boost_INCLUDE_DIRS NAMES boost/random.hpp
@@ -150,23 +159,41 @@ endif()
 # --- Build the extension ---
 pybind11_add_module(_volestipy MODULE
     src/bindings/volesti_bindings.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/benchmark_cli.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/benchmark_utils.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/walk_parameters.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/walk_registry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/walk_result.cpp
+
     ${LPSOLVE_SOURCES}
 )
 
 target_include_directories(_volestipy PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include   # project local headers (sampling_minimal.hpp)
     ${VOLESTI_INCLUDE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti
     ${VOLESTI_INCLUDE_DIR}/../external   # Spectra, minimum_ellipsoid, etc.
+    ${VOLESTI_INCLUDE_DIR}/generators
+    ${VOLESTI_INCLUDE_DIR}/include/generators
+    ${VOLESTI_INCLUDE_DIR}/include/preprocess
+    ${VOLESTI_INCLUDE_DIR}/preprocess
+    ${VOLESTI_INCLUDE_DIR}/benchmark/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/include
     ${Boost_INCLUDE_DIRS}
     ${LPSOLVE_INCLUDE_DIRS}
 )
 
 target_link_libraries(_volestipy PRIVATE
     Eigen3::Eigen
+    Boost::program_options
+    ${QD_LIB}
+    m
 )
 
 target_compile_definitions(_volestipy PRIVATE
     ${LPSOLVE_DEFINITIONS}
+    DISABLE_NLP_ORACLES
 )
 
 target_compile_options(_volestipy PRIVATE

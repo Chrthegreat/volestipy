@@ -66,7 +66,7 @@ sudo apt-get install -y \
 ### 3. Install Python dependencies
 
 ```bash
-pip install pybind11 numpy
+pip install pybind11 "numpy<2.0"
 ```
 
 ### 4a. Build via `pip` (recommended)

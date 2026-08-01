@@ -1,0 +1,35 @@
+{
+    "global_settings": {
+        "target_ESS": 3000,
+        "time_limit_sec": 30.0,
+        "base_seed": 42,
+        "dimensions": [10,20,30,40,50,60],
+        "rotation_angle": 53,
+        "polytope_choice": "Cube",
+        "custom_A_file": "Cube_50_A.csv",
+        "custom_b_file": "Cube_50_b.csv",
+        "dynamic_batch_size": true,
+        "write_to_file": true,
+        "rounding": false,
+        "auto_walk": false,
+        "show_menu": false
+    },
+"walks": {
+        "BallWalk":                 { "enabled": false, "samples": 20000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "BilliardWalk":             { "enabled": true, "samples": 2000, "walk_len_multiplier": 0, "walk_len_base": 1 },
+        "AcceleratedBilliardWalk":  { "enabled": true, "samples": 2000,  "walk_len_multiplier": 0, "walk_len_base": 1 },
+        "SparseBilliardWalk":       { "enabled": false, "samples": 1000, "walk_len_multiplier": 0, "walk_len_base": 1 },
+        "CDHRWalk":                 { "enabled": true, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "RDHRWalk":                 { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "DikinWalk":                { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "JohnWalk":                 { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "VaidyaWalk":               { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "GaussianBallWalk":         { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0, "a_i_param": 1.0 },
+        "GaussianCDHRWalk":         { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0, "a_i_param": 1.0 },
+        "BilliardShakeAndBakeWalk": { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "ShakeAndBakeWalk":         { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "BCDHRWalk":                { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "BRDHRWalk":                { "enabled": false, "samples": 1000, "walk_len_multiplier": 2, "walk_len_base": 0 },
+        "CRHMCWalk":                { "enabled": false, "samples": 1000, "walk_len_multiplier": 0, "walk_len_base": 1 }
+    }
+}

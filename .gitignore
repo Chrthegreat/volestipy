@@ -44,3 +44,9 @@ Thumbs.db
 htmlcov/
 .tox/
 external/lp_solve_5.5/
+Volesti-env/
+test.py
+*.tar.gz
+benchmark/__pycache__/
+benchmark/*.csv
+benchmark/results/
