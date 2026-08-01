@@ -1,17 +1,3 @@
-"""
-Shared pytest fixtures for the benchmark test suite.
-
-Key idea: `run_benchmark` in the C++ module has no return value that's
-useful to assert on directly (it just writes a CSV as a side effect and
-may raise). So most unit tests fake `volestipy.run_benchmark` with a
-Python stand-in that mimics its observable behavior (writes rows to the
-CSV, or raises), which lets us test main()'s control flow (success /
-KeyboardInterrupt / Exception -> always calls plot_results) without
-needing the compiled extension or a real, slow sampling run at all.
-
-The one real end-to-end test (test_integration.py) does call the actual
-volestipy.run_benchmark, but with a deliberately tiny/fast config.
-"""
 import json
 import os
 import sys
@@ -26,16 +12,11 @@ if REPO_ROOT not in sys.path:
 
 @pytest.fixture
 def tmp_cwd(tmp_path, monkeypatch):
-    """Run the test inside an isolated temp directory (own cwd),
-    since main() writes 'benchmark_results.csv' relative to cwd."""
     monkeypatch.chdir(tmp_path)
     return tmp_path
 
-
 @pytest.fixture
 def base_config():
-    """A full config matching your schema, as a Python dict, so tests
-    can mutate/parametrize individual fields instead of hand-editing JSON."""
     return {
         "global_settings": {
             "target_ESS": 3000,
@@ -73,12 +54,8 @@ def base_config():
         },
     }
 
-
 @pytest.fixture
 def fast_config():
-    """A minimal config meant to actually finish in ~1-2s against the
-    real C++ extension: one tiny dimension, one cheap walk, few samples,
-    a hard time limit as a safety net."""
     return {
         "global_settings": {
             "target_ESS": 100,
@@ -104,8 +81,6 @@ def fast_config():
 
 @pytest.fixture
 def write_config(tmp_cwd):
-    """Helper: dump a config dict to walk_config.json in the tmp cwd,
-    matching the path resolution main() uses (next to the script)."""
     def _write(config_dict, name="walk_config.json"):
         path = tmp_cwd / name
         path.write_text(json.dumps(config_dict, indent=2))
@@ -114,14 +89,6 @@ def write_config(tmp_cwd):
 
 
 class FakeVolestipy:
-    """Drop-in stand-in for the `volestipy` C++ extension module.
-
-    Configure `.behavior` to control what run_benchmark() does:
-      - "success": writes a couple of fake result rows to the CSV
-      - "keyboard_interrupt": raises KeyboardInterrupt after writing partial rows
-      - "crash": raises a RuntimeError after writing partial rows
-      - "noop": does nothing (simulates e.g. all walks disabled)
-    """
     def __init__(self, behavior="success", csv_file="benchmark_results.csv"):
         self.behavior = behavior
         self.csv_file = csv_file
@@ -151,9 +118,6 @@ class FakeVolestipy:
 
 @pytest.fixture
 def fake_volestipy_module(monkeypatch):
-    """Install a FakeVolestipy() into sys.modules['volestipy'] so that
-    `import volestipy` inside your benchmark script picks it up, and
-    return the instance so tests can configure .behavior and inspect .calls."""
     def _install(behavior="success"):
         fake_module = FakeVolestipy(behavior=behavior)
         monkeypatch.setitem(sys.modules, "volestipy", fake_module)
