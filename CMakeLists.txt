@@ -160,7 +160,7 @@ endif()
 pybind11_add_module(_volestipy MODULE
     src/bindings/volesti_bindings.cpp
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/benchmark_cli.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/benchmark_run.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/benchmark_utils.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/walk_parameters.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/external/volesti/benchmark/src/walk_registry.cpp

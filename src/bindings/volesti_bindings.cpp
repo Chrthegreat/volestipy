@@ -55,7 +55,7 @@
 #include "preprocess/inscribed_ellipsoid_rounding.hpp"
 
 // For Benchmark
-#include "benchmark/include/benchmark_cli.hpp"
+#include "benchmark/include/benchmark_run.hpp"
 
 #include <Eigen/Eigen>
 #include <vector>
@@ -1017,7 +1017,7 @@ R : float
         }
         
         // Call your refactored main function
-        return run_benchmark_cli(cstrings.size(), cstrings.data());
+        return run_benchmark(cstrings.size(), cstrings.data());
         
     }, py::arg("args") = std::vector<std::string>(),
     R"pbdoc(

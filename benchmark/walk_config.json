@@ -12,6 +12,7 @@
         "write_to_file": true,
         "rounding": false,
         "auto_walk": false,
+        "show_console_logs": false,
         "show_menu": false
     },
 "walks": {

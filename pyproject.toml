@@ -39,3 +39,6 @@ package-dir = {"" = "."}
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["volestipy*"]
+
+[tool.pytest.ini_options]
+markers = ["integration: real end-to-end tests that call the compiled volestipy extension (slower)"]
