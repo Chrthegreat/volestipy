@@ -1002,21 +1002,15 @@ R : float
     m.attr("__version__") = "0.1.0";
     m.attr("__volesti_version__") = "1.1.2";
 
-    // ----------------------------------------------------------
-    // Benchmark Suite
-    // ----------------------------------------------------------
+    // *****Benchmark Suite*****
     m.def("run_benchmark", [](const std::vector<std::string>& args) {
-        // Convert Python list of strings to C-style argc/argv
         std::vector<char*> cstrings;
         
-        // argv[0] is conventionally the program name
         cstrings.push_back(const_cast<char*>("volestipy_benchmark")); 
         
         for (const auto& s : args) {
             cstrings.push_back(const_cast<char*>(s.c_str()));
         }
-        
-        // Call your refactored main function
         return run_benchmark(cstrings.size(), cstrings.data());
         
     }, py::arg("args") = std::vector<std::string>(),
