@@ -17,7 +17,7 @@ REQUIRED_GLOBAL_KEYS = {
 
 REQUIRED_WALK_KEYS = {"enabled", "samples", "walk_len_multiplier", "walk_len_base"}
 
-VALID_POLYTOPES = {"Cube", "Custom"}  # extend as your C++ side supports more
+VALID_POLYTOPES = {"Cube", "Custom"}
 
 
 def validate_config(config: dict) -> list[str]:
@@ -48,7 +48,7 @@ def validate_config(config: dict) -> list[str]:
         problems.append("time_limit_sec must be a positive number")
 
     if gs.get("polytope_choice") not in VALID_POLYTOPES and "polytope_choice" in gs:
-        # not fatal-fail this hard in prod, but flag it for tests
+
         problems.append(f"polytope_choice {gs.get('polytope_choice')!r} not in {VALID_POLYTOPES}")
 
     walks = config.get("walks")
